@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "node-sass": "^4.10.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0"
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
