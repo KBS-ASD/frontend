@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+To use NPM, make sure node.js is installed on your device.
+
 In the project directory, you can run:
 
 ### `npm start`
