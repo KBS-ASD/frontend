@@ -6,6 +6,7 @@ import Label from "../../atoms/Label";
 import Fieldset from "../../atoms/Fieldset";
 import Input from "../../atoms/Input";
 import style from "./CreateTestForm.module.scss";
+import createTest from "../../../actions/createTest";
 
 class CreateTestForm extends Component {
   constructor(props) {
@@ -16,22 +17,31 @@ class CreateTestForm extends Component {
     };
   }
 
-  handleSubmit = submitEvent => {
+  handleSubmit = async submitEvent => {
     submitEvent.preventDefault();
 
-    console.log(submitEvent);
+    this.setState({ isSubmitting: true });
+
+    try {
+      await createTest({
+        [FieldNames.Frequency]: 50,
+        [FieldNames.Size]: 50,
+        [FieldNames.Duration]: 50,
+        [FieldNames.BatchSize]: 50,
+        [FieldNames.Protocol]: 50
+      });
+    } catch (error) {
+      this.setState({ error, isSubmitting: false });
+    }
+
+    this.setState({ isSubmitting: false });
   };
 
   render() {
     const { isSubmitting } = this.state;
 
     return (
-      <form
-        action="https://kbs-asd-test.azurewebsites.net/api/test"
-        method="POST"
-        className={style.form}
-        onSubmit={this.handleSubmit}
-      >
+      <form className={style.form} onSubmit={this.handleSubmit}>
         <Fieldset>
           <Label htmlFor={FieldNames.Frequency}>Frequency</Label>
           <Input.Text name={FieldNames.Frequency} />
