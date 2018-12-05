@@ -44,22 +44,22 @@ class CreateTestForm extends Component {
       <form className={style.form} onSubmit={this.handleSubmit}>
         <Fieldset>
           <Label htmlFor={FieldNames.Frequency}>Frequency</Label>
-          <Input.Text name={FieldNames.Frequency} />
+          <Input.Number name={FieldNames.Frequency} min={0} />
         </Fieldset>
 
         <Fieldset>
           <Label htmlFor={FieldNames.Size}>Size</Label>
-          <Input.Text name={FieldNames.Size} />
+          <Input.Number name={FieldNames.Size} min={0} />
         </Fieldset>
 
         <Fieldset>
           <Label htmlFor={FieldNames.Duration}>Duration</Label>
-          <Input.Text name={FieldNames.Duration} />
+          <Input.Date name={FieldNames.Duration} min={0} />
         </Fieldset>
 
         <Fieldset>
           <Label htmlFor={FieldNames.BatchSize}>BatchSize</Label>
-          <Input.Text name={FieldNames.BatchSize} />
+          <Input.Number name={FieldNames.BatchSize} min={0} />
         </Fieldset>
 
         <Fieldset>
