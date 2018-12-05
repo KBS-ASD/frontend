@@ -8,6 +8,7 @@ import Label from "../../atoms/Label";
 import Fieldset from "../../atoms/Fieldset";
 import Input from "../../atoms/Input";
 import getTestById from "../../../actions/getTestById";
+import getFormValues from "../../../util/getFormValues";
 
 class CreateGet extends Component {
   constructor(props) {
@@ -23,11 +24,7 @@ class CreateGet extends Component {
 
     this.setState({ isSubmitting: true });
 
-    try {
-      await getTests();
-    } catch (error) {
-      this.setState({ error, isSubmitting: false });
-    }
+    await getTests(getFormValues(submitEvent.currentTarget.values));
 
     this.setState({ isSubmitting: false });
   };
@@ -37,11 +34,7 @@ class CreateGet extends Component {
 
     this.setState({ isSubmitting: true });
 
-    try {
-      await getTestById(4);
-    } catch (error) {
-      this.setState({ error, isSubmitting: false });
-    }
+    await getTestById(getFormValues(submitEvent.currentTarget.elements));
 
     this.setState({ isSubmitting: false });
   };
@@ -54,13 +47,16 @@ class CreateGet extends Component {
         <form onSubmit={this.handleSubmit}>
           <Button type="submit">Get Latest Testresults</Button>
         </form>
+
         <form onSubmit={this.handleSubmitWithCode}>
           <Fieldset>
             <Label htmlFor={TestEnviroment.Id}>Test ID</Label>
             <Input.Number name={TestEnviroment.Id} min={0} />
           </Fieldset>
+
           <Button type="submit">Get Testresult</Button>
         </form>
+
         {isSubmitting && <Icon.Fire />}
       </div>
     );
