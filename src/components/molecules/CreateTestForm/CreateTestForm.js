@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import createTest from "../../../actions/createTest";
+import getFormValues from "../../../util/getFormValues";
 import FieldNames from "../../../enum/FieldNames";
 import Button from "../../atoms/Button";
 import Icon from "../../atoms/Icon";
@@ -6,7 +8,6 @@ import Label from "../../atoms/Label";
 import Fieldset from "../../atoms/Fieldset";
 import Input from "../../atoms/Input";
 import style from "./CreateTestForm.module.scss";
-import createTest from "../../../actions/createTest";
 
 class CreateTestForm extends Component {
   constructor(props) {
@@ -22,17 +23,7 @@ class CreateTestForm extends Component {
 
     this.setState({ isSubmitting: true });
 
-    try {
-      await createTest({
-        [FieldNames.Frequency]: 50,
-        [FieldNames.Size]: 50,
-        [FieldNames.Duration]: 50,
-        [FieldNames.BatchSize]: 50,
-        [FieldNames.Protocol]: 50
-      });
-    } catch (error) {
-      this.setState({ error, isSubmitting: false });
-    }
+    await createTest(getFormValues(submitEvent.currentTarget.elements));
 
     this.setState({ isSubmitting: false });
   };
