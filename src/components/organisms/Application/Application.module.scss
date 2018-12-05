@@ -1,0 +1,40 @@
+@import "../../../util/reset";
+
+@import "../../../data/Sizes";
+@import "../../../data/Colors";
+@import "../../../data/Fonts";
+@import "../../../data/Sizes";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: $baseSize;
+  font-family: $baseFont;
+  color: $colorCopy;
+  background-color: $colorTheme;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  ::selection {
+    background-color: $colorThemeAccent;
+    color: $colorTheme;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.root {
+  min-width: 100vw;
+  min-height: 100vh;
+}

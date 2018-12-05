@@ -1,0 +1,19 @@
+@import "../../../../data/Colors";
+
+.root {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  border: 0;
+  outline: 0;
+  color: currentColor;
+
+  &:hover:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:hover:disabled {
+    cursor: not-allowed;
+  }
+}
