@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import createTest from "../../../actions/createTest";
 import getFormValues from "../../../util/getFormValues";
-import FieldNames from "../../../enum/FieldNames";
+import { CreateTestFieldNames } from "../../../enum/FieldNames";
 import Button from "../../atoms/Button";
 import Icon from "../../atoms/Icon";
 import Label from "../../atoms/Label";
@@ -34,28 +34,36 @@ class CreateTestForm extends Component {
     return (
       <form className={style.form} onSubmit={this.handleSubmit}>
         <Fieldset>
-          <Label htmlFor={FieldNames.Frequency}>Frequency</Label>
-          <Input.Number name={FieldNames.Frequency} min={0} />
+          <Label htmlFor={CreateTestFieldNames.Name}>Name</Label>
+          <Input.Text name={CreateTestFieldNames.Name} />
         </Fieldset>
 
         <Fieldset>
-          <Label htmlFor={FieldNames.Size}>Size</Label>
-          <Input.Number name={FieldNames.Size} min={0} />
+          <Label htmlFor={CreateTestFieldNames.Frequency}>Frequency</Label>
+          <Input.Number name={CreateTestFieldNames.Frequency} min={0} />
         </Fieldset>
 
         <Fieldset>
-          <Label htmlFor={FieldNames.Duration}>Duration</Label>
-          <Input.Date name={FieldNames.Duration} min={0} />
+          <Label htmlFor={CreateTestFieldNames.Size}>Size</Label>
+          <Input.Number name={CreateTestFieldNames.Size} min={0} />
         </Fieldset>
 
         <Fieldset>
-          <Label htmlFor={FieldNames.BatchSize}>BatchSize</Label>
-          <Input.Number name={FieldNames.BatchSize} min={0} />
+          <Label htmlFor={CreateTestFieldNames.Duration}>Duration</Label>
+          <Input.Date name={CreateTestFieldNames.Duration} min={0} />
         </Fieldset>
 
         <Fieldset>
-          <Label htmlFor={FieldNames.Protocol}>Protocol</Label>
-          <Input.Text name={FieldNames.Protocol} />
+          <Label htmlFor={CreateTestFieldNames.BatchSize}>BatchSize</Label>
+          <Input.Number name={CreateTestFieldNames.BatchSize} min={0} />
+        </Fieldset>
+
+        <Fieldset>
+          <Label htmlFor={CreateTestFieldNames.Protocol}>Protocol</Label>
+          <Input.Select
+            name={CreateTestFieldNames.Protocol}
+            options={[["AMQP", "amqp"], ["SB", "sb"]]}
+          />
         </Fieldset>
 
         <Button type="submit">

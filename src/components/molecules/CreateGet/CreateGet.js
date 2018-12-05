@@ -3,7 +3,7 @@ import Button from "../../atoms/Button";
 import Icon from "../../atoms/Icon";
 import style from "./CreateGet.module.scss";
 import getTests from "../../../actions/getTests";
-import TestEnviroment from "../../../model/TestEnviroment";
+import { GetTestFieldNames } from "../../../enum/FieldNames";
 import Label from "../../atoms/Label";
 import Fieldset from "../../atoms/Fieldset";
 import Input from "../../atoms/Input";
@@ -24,7 +24,7 @@ class CreateGet extends Component {
 
     this.setState({ isSubmitting: true });
 
-    await getTests();
+    await getTests(getFormValues(submitEvent.currentTarget.values));
 
     this.setState({ isSubmitting: false });
   };
@@ -47,13 +47,16 @@ class CreateGet extends Component {
         <form onSubmit={this.handleSubmit}>
           <Button type="submit">Get Latest Testresults</Button>
         </form>
+
         <form onSubmit={this.handleSubmitWithCode}>
           <Fieldset>
-            <Label htmlFor={TestEnviroment.Id}>Test ID</Label>
-            <Input.Number name={TestEnviroment.Id} min={0} />
+            <Label htmlFor={GetTestFieldNames.Name}>Name</Label>
+            <Input.Text name={GetTestFieldNames.Name} />
           </Fieldset>
+
           <Button type="submit">Get Testresult</Button>
         </form>
+
         {isSubmitting && <Icon.Fire />}
       </div>
     );
