@@ -47,6 +47,26 @@ class CreateTestForm extends Component {
           <Input.Text name={FieldNames.Frequency} />
         </Fieldset>
 
+        <Fieldset>
+          <Label htmlFor={FieldNames.Size}>Size</Label>
+          <Input.Text name={FieldNames.Size} />
+        </Fieldset>
+
+        <Fieldset>
+          <Label htmlFor={FieldNames.Duration}>Duration</Label>
+          <Input.Text name={FieldNames.Duration} />
+        </Fieldset>
+
+        <Fieldset>
+          <Label htmlFor={FieldNames.BatchSize}>BatchSize</Label>
+          <Input.Text name={FieldNames.BatchSize} />
+        </Fieldset>
+
+        <Fieldset>
+          <Label htmlFor={FieldNames.Protocol}>Protocol</Label>
+          <Input.Text name={FieldNames.Protocol} />
+        </Fieldset>
+
         <Button type="submit">
           Start test
           {isSubmitting && <Icon.Fire />}
