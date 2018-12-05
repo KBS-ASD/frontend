@@ -12,7 +12,7 @@ export default host => (path, { qs = {}, body, ...args }) => {
 
   const query = queryString.stringify(qs);
 
-  return fetch(`${host}${path}?${query}`, {
+  return fetch(`${host}${path}${query && `?${query}`}`, {
     ...args,
     body: JSON.stringify(body)
   });
