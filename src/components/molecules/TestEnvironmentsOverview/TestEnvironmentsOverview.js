@@ -31,21 +31,23 @@ class TestEnvironmentsOverview extends Component {
       getFormValues(submitEvent.currentTarget.elements)
     );
 
-    testEnvironments.data = {
-      configuraton: {
-        name: "test",
-        frequency: 0,
-        size: 9,
-        testDuration: 9,
-        batchSize: 3,
-        protocol: "Test"
-      },
-      status: 1,
-      startTime: new Date()
-    };
+    // result example
+    // testEnvironments = [];
+    // testEnvironments.push({
+    //   configuraton: {
+    //     name: "test",
+    //     frequency: 0,
+    //     size: 9,
+    //     testDuration: 9,
+    //     batchSize: 3,
+    //     protocol: "Test"
+    //   },
+    //   status: 1,
+    //   startTime: new Date()
+    // });
 
     this.setState({
-      testEnvironments: testEnvironments.data || EMPTY_ARRAY,
+      testEnvironments: testEnvironments || EMPTY_ARRAY,
       isSubmitting: false
     });
   };
