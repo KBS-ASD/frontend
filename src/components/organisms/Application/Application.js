@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CreateTestForm from "../../molecules/CreateTestForm";
-import CreateGet from "../../molecules/CreateGet";
+import CreateGet from "../../molecules/TestEnvironmentsOverview";
 import style from "./Application.module.scss";
 
 class Application extends Component {

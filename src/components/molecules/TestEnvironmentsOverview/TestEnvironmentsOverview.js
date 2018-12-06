@@ -8,11 +8,11 @@ import Label from "../../atoms/Label";
 import Fieldset from "../../atoms/Fieldset";
 import Input from "../../atoms/Input";
 import TestEnvironments from "../TestEnvironments";
-import style from "./CreateGet.module.scss";
+import style from "./TestEnvironmentsOverview.module.scss";
 
 const EMPTY_ARRAY = [];
 
-class CreateGet extends Component {
+class TestEnvironmentsOverview extends Component {
   constructor(props) {
     super(props);
 
@@ -27,9 +27,22 @@ class CreateGet extends Component {
 
     this.setState({ isSubmitting: true });
 
-    const testEnvironments = await getTests(
+    let testEnvironments = await getTests(
       getFormValues(submitEvent.currentTarget.elements)
     );
+
+    testEnvironments.data = {
+      configuraton: {
+        name: "test",
+        frequency: 0,
+        size: 9,
+        testDuration: 9,
+        batchSize: 3,
+        protocol: "Test"
+      },
+      status: 1,
+      startTime: new Date()
+    };
 
     this.setState({
       testEnvironments: testEnvironments.data || EMPTY_ARRAY,
@@ -59,4 +72,4 @@ class CreateGet extends Component {
   }
 }
 
-export default CreateGet;
+export default TestEnvironmentsOverview;
