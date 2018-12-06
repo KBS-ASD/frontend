@@ -1,21 +1,24 @@
 import React, { Component } from "react";
-import Button from "../../atoms/Button";
-import Icon from "../../atoms/Icon";
-import style from "./CreateGet.module.scss";
+import getFormValues from "../../../util/getFormValues";
 import getTests from "../../../actions/getTests";
 import { GetTestFieldNames } from "../../../enum/FieldNames";
+import Button from "../../atoms/Button";
+import Icon from "../../atoms/Icon";
 import Label from "../../atoms/Label";
 import Fieldset from "../../atoms/Fieldset";
 import Input from "../../atoms/Input";
-import getTestById from "../../../actions/getTestById";
-import getFormValues from "../../../util/getFormValues";
+import TestEnvironments from "../TestEnvironments";
+import style from "./CreateGet.module.scss";
+
+const EMPTY_ARRAY = [];
 
 class CreateGet extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isSubmitting: false
+      isSubmitting: false,
+      testEnvironments: []
     };
   }
 
@@ -24,40 +27,33 @@ class CreateGet extends Component {
 
     this.setState({ isSubmitting: true });
 
-    await getTests(getFormValues(submitEvent.currentTarget.values));
+    const testEnvironments = await getTests(
+      getFormValues(submitEvent.currentTarget.elements)
+    );
 
-    this.setState({ isSubmitting: false });
-  };
-
-  handleSubmitWithCode = async submitEvent => {
-    submitEvent.preventDefault();
-
-    this.setState({ isSubmitting: true });
-
-    await getTestById(getFormValues(submitEvent.currentTarget.elements));
-
-    this.setState({ isSubmitting: false });
+    this.setState({
+      testEnvironments: testEnvironments.data || EMPTY_ARRAY,
+      isSubmitting: false
+    });
   };
 
   render() {
-    const { isSubmitting } = this.state;
+    const { isSubmitting, testEnvironments } = this.state;
 
     return (
       <div className={style.form}>
         <form onSubmit={this.handleSubmit}>
-          <Button type="submit">Get Latest Testresults</Button>
-        </form>
-
-        <form onSubmit={this.handleSubmitWithCode}>
           <Fieldset>
             <Label htmlFor={GetTestFieldNames.Name}>Name</Label>
             <Input.Text name={GetTestFieldNames.Name} />
           </Fieldset>
 
-          <Button type="submit">Get Testresult</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            Search {isSubmitting && <Icon.Fire />}
+          </Button>
         </form>
 
-        {isSubmitting && <Icon.Fire />}
+        <TestEnvironments data={testEnvironments} />
       </div>
     );
   }
