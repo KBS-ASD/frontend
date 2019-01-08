@@ -1,51 +1,40 @@
 import React, { Component } from "react";
-import { Line as LineChart } from "react-chartjs";
+import { Scatter as ScatterChart } from "react-chartjs-2";
 import results from "./results.json";
 import "./App.scss";
 
-class MyChart extends Component {
+class SendOppositeReceived extends Component {
   constructor() {
     super();
 
-    this.chartData = results
-      .reduce((accumulator, currentValue) => {
-        if (accumulator[currentValue.properties.MessageId] == null)
-          accumulator[currentValue.properties.MessageId] = {};
+    this.chartData = results.reduce((accumulator, currentValue) => {
+      if (accumulator[currentValue.properties.MessageId] == null)
+        accumulator[currentValue.properties.MessageId] = { x: 0, y: 0 };
 
-        switch (currentValue.eventName) {
-          case "MessageReceived":
-            accumulator[currentValue.properties.MessageId].y = parseInt(
-              currentValue.properties.ReceivedAt,
-              10
-            );
-            break;
+      switch (currentValue.eventName) {
+        case "MessageReceived":
+          accumulator[currentValue.properties.MessageId].y = parseInt(
+            currentValue.properties.ReceivedAt
+          );
+          break;
 
-          case "MessageSent":
-            accumulator[currentValue.properties.MessageId].x = parseInt(
-              currentValue.properties.SentAt,
-              10
-            );
-            break;
+        case "MessageSent":
+          accumulator[currentValue.properties.MessageId].x = parseInt(
+            currentValue.properties.SentAt
+          );
+          break;
 
-          default:
-            console.info("Event name out or reach");
-        }
+        default:
+          accumulator[currentValue.properties.MessageId].y = -1;
+      }
 
-        return accumulator;
-      }, [])
-      // Convert to timespan in milliseconds
-      .map(point => (point.y - point.x) / 10000);
+      return accumulator;
+    }, []);
 
-    // My chart options
     this.chartOptions = {
       scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            }
-          }
-        ]
+        xAxes: [{}],
+        yAxes: [{}]
       }
     };
   }
@@ -53,9 +42,8 @@ class MyChart extends Component {
   render() {
     return (
       <div>
-        <LineChart
+        <ScatterChart
           data={{
-            labels: [...Array(this.chartData.length / 5).keys()],
             datasets: [
               {
                 data: this.chartData
@@ -75,7 +63,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MyChart />
+        <SendOppositeReceived />
       </div>
     );
   }
