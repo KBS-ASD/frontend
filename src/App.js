@@ -13,15 +13,13 @@ class SendOppositeReceived extends Component {
 
       switch (currentValue.eventName) {
         case "MessageReceived":
-          accumulator[currentValue.properties.MessageId].y = parseInt(
-            currentValue.properties.ReceivedAt
-          );
+          accumulator[currentValue.properties.MessageId].y =
+            parseInt(currentValue.properties.ReceivedAt) / 1000;
           break;
 
         case "MessageSent":
-          accumulator[currentValue.properties.MessageId].x = parseInt(
-            currentValue.properties.SentAt
-          );
+          accumulator[currentValue.properties.MessageId].x =
+            parseInt(currentValue.properties.SentAt) / 1000;
           break;
 
         default:
@@ -33,8 +31,32 @@ class SendOppositeReceived extends Component {
 
     this.chartOptions = {
       scales: {
-        xAxes: [{}],
-        yAxes: [{}]
+        xAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "SentAt (ms)"
+            },
+            ticks: {
+              // beginAtZero: true,
+              min: 60000,
+              max: 80000
+            }
+          }
+        ],
+        yAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "ReceivedAt (ms)"
+            },
+            ticks: {
+              // beginAtZero: true,
+              min: 60000,
+              max: 80000
+            }
+          }
+        ]
       }
     };
   }
@@ -46,7 +68,12 @@ class SendOppositeReceived extends Component {
           data={{
             datasets: [
               {
+                label: "Test data",
                 data: this.chartData
+              },
+              {
+                data: [{ x: 0, y: 0 }, { x: 100000, y: 100000 }],
+                showLine: true
               }
             ]
           }}
