@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import idx from "idx";
 import getBenchmark from "../../actions/getBenchmark";
-import Layout from "../Layout";
 import FilesView from "../FilesView";
+import Layout from "../Layout";
 import ResultsView from "../ResultsView";
+import ServiceStatus from "../ServiceStatus";
 import "./App.scss";
 
 class App extends Component {
@@ -27,10 +28,13 @@ class App extends Component {
       <div className="App">
         <Layout
           sidebar={
-            <FilesView
-              showBenchmark={this.showBenchmark}
-              activeBenchmark={idx(benchmark, _ => _.configuration.name)}
-            />
+            <Fragment>
+              <ServiceStatus />
+              <FilesView
+                showBenchmark={this.showBenchmark}
+                activeBenchmark={idx(benchmark, _ => _.configuration.name)}
+              />
+            </Fragment>
           }
           content={
             <ResultsView
