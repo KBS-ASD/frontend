@@ -16,23 +16,35 @@ class FilesView extends Component {
   }
 
   async refresh() {
+    const { showBenchmark } = this.props;
     const fileNames = await getFiles();
 
-    this.setState({ fileNames });
+    if (!fileNames) return;
+
+    this.setState({ fileNames, pagination: 5 });
+
+    showBenchmark(fileNames[0]);
   }
+
+  showMore = () =>
+    this.setState(() => ({ pagination: this.state.pagination + 5 }));
 
   render() {
     const { showBenchmark, activeBenchmark } = this.props;
-    const { fileNames } = this.state;
+    const { fileNames, pagination } = this.state;
+
+    const paginatedFilenames = fileNames.slice(0, pagination);
 
     return (
       <div className="FilesView">
+        <h2>Benchmark history</h2>
+
         <button onClick={this.refresh} className="FilesView__refresh">
           Refresh
         </button>
 
         <ul className="FilesView__list">
-          {fileNames.map((fileName, index) => (
+          {paginatedFilenames.map((fileName, index) => (
             <li
               key={index}
               className={`FilesView__listItem ${activeBenchmark ===
@@ -45,6 +57,15 @@ class FilesView extends Component {
             </li>
           ))}
         </ul>
+
+        {fileNames.length >= pagination && (
+          <button
+            onClick={this.showMore}
+            style={{ backgroundColor: "lightyellow" }}
+          >
+            Show more
+          </button>
+        )}
       </div>
     );
   }

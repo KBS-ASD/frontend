@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import idx from "idx";
 import getBenchmark from "../../actions/getBenchmark";
+import BenchmarkForm from "../BenchmarkForm";
 import FilesView from "../FilesView";
 import Layout from "../Layout";
 import ResultsView from "../ResultsView";
@@ -30,10 +31,13 @@ class App extends Component {
           sidebar={
             <Fragment>
               <ServiceStatus />
+
               <FilesView
                 showBenchmark={this.showBenchmark}
                 activeBenchmark={idx(benchmark, _ => _.configuration.name)}
               />
+
+              <BenchmarkForm />
             </Fragment>
           }
           content={

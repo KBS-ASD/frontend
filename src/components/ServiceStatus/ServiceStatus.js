@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import idx from "idx";
+import { distanceInWordsToNow } from "date-fns";
 import getWebjobInformation from "../../actions/getWebjobInformation";
+import "./ServiceStatus.scss";
 
 const INTERVAL = 1000;
 
@@ -24,17 +26,47 @@ class ServiceStatus extends Component {
 
   async updateStatus() {
     const webjobInformation = await getWebjobInformation();
-    const status = idx(webjobInformation, _ => _.latest_run.status);
-
-    this.setState({ status });
+    this.setState({ webjobInformation });
 
     this.getStatusTimeout = setTimeout(this.updateStatus, INTERVAL);
   }
 
   render() {
-    const { status } = this.state;
+    const { webjobInformation } = this.state;
 
-    return <div className="ServiceStatus">Status: {status}</div>;
+    const status = idx(webjobInformation, _ => _.latest_run.status);
+    const outputUrl = idx(webjobInformation, _ => _.latest_run.output_url);
+    const startTime = idx(webjobInformation, _ => _.latest_run.start_time);
+    const duration = idx(webjobInformation, _ => _.latest_run.duration);
+
+    return (
+      <div className="ServiceStatus">
+        <h2>Latest run</h2>
+
+        <div className="infoField">Status: {status}</div>
+
+        <div className="infoField">
+          Start time:{" "}
+          <span title={startTime}>
+            {distanceInWordsToNow(startTime, { includeSeconds: true })} ago
+          </span>
+        </div>
+
+        <div className="infoField">Duration: {duration}</div>
+
+        <div className="infoField">
+          Output (protected):{" "}
+          <a
+            href={outputUrl}
+            title={outputUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {outputUrl}
+          </a>
+        </div>
+      </div>
+    );
   }
 }
 

@@ -8,13 +8,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 button {
   width: 100%;
   padding: 10px 15px;
   background: lightblue;
   font-weight: bold;
   transition: all .2s ease;
-  border: none;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;

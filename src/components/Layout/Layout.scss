@@ -5,13 +5,14 @@
   height: 100vh;
 }
 
-.Layout__sidebar {
-  width: 15%;
-  border-right: 1px solid #eee;
+.Layout__sidebar,
+.Layout__content {
+  overflow: auto;
   padding: 15px;
 }
 
-.Layout__content {
-  padding: 15px;
-  overflow: auto;
+.Layout__sidebar {
+  width: 15%;
+  min-width: 350px;
+  border-right: 1px solid #eee;
 }
