@@ -22,8 +22,9 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: build\**
+    contents: build/**
     targetFolder: $(Build.ArtifactStagingDirectory)
+    cleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
