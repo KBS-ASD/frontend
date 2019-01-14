@@ -1,0 +1,24 @@
+.FilesView {
+
+}
+
+.FilesView__refresh {
+    background: lavenderblush;
+    margin-bottom: 40px;
+}
+
+.FilesView__list {
+padding: 0;
+margin: 0;
+list-style: none;
+}
+
+.FilesView__listItem {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.FilesView__listItem--active button {
+    background: lightgreen;
+}
+

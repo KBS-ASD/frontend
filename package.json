@@ -5,6 +5,7 @@
   "dependencies": {
     "chart.js": "^2.7.3",
     "husky": "^1.2.0",
+    "idx": "^2.5.2",
     "lint-staged": "^8.1.0",
     "node-sass": "^4.10.0",
     "react": "^16.6.3",
@@ -16,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write ./src/**/*.{scss,js,json}"
   },
   "eslintConfig": {
     "extends": "react-app"
