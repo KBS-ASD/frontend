@@ -44,7 +44,8 @@ class BenchmarkForm extends Component {
   handleSubmit = async submitEvent => {
     submitEvent.preventDefault();
 
-    const elements = Array.from(submitEvent.target.elements);
+    const formElement = submitEvent.target;
+    const elements = Array.from(formElement.elements);
 
     const invalidElements = this.validateElements(elements);
 
@@ -81,7 +82,7 @@ class BenchmarkForm extends Component {
     await postBenchmark(configuration);
 
     // Reset form after successful submit
-    submitEvent.target.reset();
+    formElement.reset();
 
     this.setState({ loading: false });
   };
@@ -108,10 +109,6 @@ class BenchmarkForm extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="BenchmarkForm">
         <h2>Run benchmark</h2>
-
-        <InputGroup label="Name" name="name">
-          <Input type="text" name="name" />
-        </InputGroup>
 
         <InputGroup label="MessageCount" name="messageCount">
           <Input type="number" name="messageCount" />
