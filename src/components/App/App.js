@@ -13,17 +13,22 @@ class App extends Component {
     super(props);
 
     this.state = {
-      benchmark: null
+      configuration: null
     };
   }
 
+  events = [];
+
   showBenchmark = async fileName => {
-    const benchmark = await getBenchmark(fileName);
-    this.setState({ benchmark });
+    const { configuration, events } = await getBenchmark(fileName);
+
+    this.events = events;
+
+    this.setState({ configuration: configuration });
   };
 
   render() {
-    const { benchmark } = this.state;
+    const { configuration } = this.state;
 
     return (
       <div className="App">
@@ -34,17 +39,14 @@ class App extends Component {
 
               <FilesView
                 showBenchmark={this.showBenchmark}
-                activeBenchmark={idx(benchmark, _ => _.configuration.name)}
+                activeBenchmark={idx(configuration, _ => _.name)}
               />
 
               <BenchmarkForm />
             </Fragment>
           }
           content={
-            <ResultsView
-              configuration={idx(benchmark, _ => _.configuration)}
-              events={idx(benchmark, _ => _.events)}
-            />
+            <ResultsView configuration={configuration} events={this.events} />
           }
         />
       </div>
