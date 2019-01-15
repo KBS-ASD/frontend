@@ -1,3 +1,4 @@
+import idx from "idx";
 import React, { Component } from "react";
 import { Scatter as ScatterChart } from "react-chartjs-2";
 
@@ -11,10 +12,10 @@ class EventPlotTime extends Component {
     let maxY = Number.MIN_SAFE_INTEGER;
 
     const data = Object.keys(a).reduce((accumulator, guid) => {
-      const messageId = a[guid].Message.Id;
+      const messageId = idx(a[guid], _ => _.Message.Id);
 
-      const aCreatedAt = a[guid].CreatedAt / 10000;
-      const bCreatedAt = b[guid].CreatedAt / 10000;
+      const aCreatedAt = idx(a[guid], _ => _.CreatedAt) / 10000;
+      const bCreatedAt = idx(b[guid], _ => _.CreatedAt) / 10000;
 
       accumulator[messageId] = {
         x: aCreatedAt,

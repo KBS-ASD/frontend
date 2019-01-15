@@ -93,6 +93,10 @@ class BenchmarkForm extends Component {
 
       if (!element.value || !validationRegex) return accumulator;
 
+      if (element.type === "time") {
+        element.value = element.value.padEnd(8, ":00");
+      }
+
       if (
         !new RegExp(validationRegex.slice(1, validationRegex.length - 1)).test(
           element.value

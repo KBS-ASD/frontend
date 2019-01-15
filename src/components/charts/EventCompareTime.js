@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import idx from "idx";
 import { Scatter as ScatterChart } from "react-chartjs-2";
+
+const EMPTY_OBJECT = {};
 
 class EventCompareTime extends Component {
   render() {
@@ -10,10 +13,10 @@ class EventCompareTime extends Component {
 
     const { a: processedA, b: processedB } = Object.keys(a).reduce(
       (accumulator, guid) => {
-        const aEvent = a[guid];
-        const bEvent = b[guid];
+        const aEvent = a[guid] || EMPTY_OBJECT;
+        const bEvent = b[guid] || EMPTY_OBJECT;
 
-        const messageId = a[guid].Message.Id;
+        const messageId = idx(a[guid], _ => _.Message.Id);
 
         accumulator.a[messageId] = {
           x: messageId,

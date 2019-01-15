@@ -1,5 +1,6 @@
 import idx from "idx";
 import React from "react";
+import ErrorBoundary from "../../components/ErrorBoundary";
 import { TestCaseTypeName } from "../../constants/enum/TestCaseType";
 import { TransportTypeName } from "../../constants/enum/TransportType";
 import "./ResultsView.scss";
@@ -13,6 +14,12 @@ import EventPlotTime from "../charts/EventPlotTime";
 const optionTypeMap = {
   testCaseType: TestCaseTypeName,
   transportType: TransportTypeName
+};
+
+const objectLengthFallback = (a, b) => {
+  if (a == null || Object.keys(a).length < 1) return b;
+
+  return a;
 };
 
 const Configuration = props => (
@@ -33,35 +40,54 @@ const Configuration = props => (
 const ResultsView = ({ configuration, events }) => (
   <div className="ResultsView">
     <div className="ResultsView__top">
-      <div className="ResultsView__top__benchmarkConfiguration">
-        <h2>Configuration</h2>
+      <ErrorBoundary fallbackText="Something went wrong while rendering 'Configuration'">
+        <div className="ResultsView__top__benchmarkConfiguration">
+          <h2>Configuration</h2>
 
-        <Configuration {...configuration} />
-      </div>
+          <Configuration {...configuration} />
+        </div>
+      </ErrorBoundary>
 
-      <div className="ResultsView__top__eventTypeOverview">
-        <h2>Event type distribution</h2>
+      <ErrorBoundary fallbackText="Something went wrong while rendering 'Event type distribution'">
+        <div className="ResultsView__top__eventTypeOverview">
+          <h2>Event type distribution</h2>
 
-        <EventTypeDoughnut
-          segments={Object.keys(events).map(label => ({
-            label,
-            value: Object.keys(events[label]).length
-          }))}
-        />
-      </div>
+          <EventTypeDoughnut
+            segments={Object.keys(events).map(label => ({
+              label,
+              value: Object.keys(events[label]).length
+            }))}
+          />
+        </div>
+      </ErrorBoundary>
     </div>
 
-    <h2>PostPublish/PreReceive Time</h2>
-    <p>*Uitleg</p>
-    <EventCompareTime a={events.PostPublish} b={events.PreReceive} />
+    <ErrorBoundary fallbackText="Something went wrong while rendering 'PostPublish/PreReceive Time'">
+      <h2>PostPublish/PreReceive Time</h2>
+      <p>*Uitleg</p>
+      <EventCompareTime
+        a={objectLengthFallback(events.PostPublish, events.PostSend)}
+        b={events.PreReceive}
+      />
+    </ErrorBoundary>
 
-    <h2>PrePublish/PostReceive Time</h2>
-    <p>*Uitleg</p>
-    <EventCompareTime a={events.PrePublish} b={events.PostReceive} />
+    <ErrorBoundary fallbackText="Something went wrong while rendering 'PrePublish/PostReceive Time'">
+      <h2>PrePublish/PostReceive Time</h2>
+      <p>*Uitleg</p>
+      <EventCompareTime
+        a={objectLengthFallback(events.PrePublish, events.PreSend)}
+        b={events.PostReceive}
+      />
+    </ErrorBoundary>
 
-    <h2>Send Opposite Received</h2>
-    <p>*Uitleg</p>
-    <EventPlotTime a={events.PostPublish} b={events.PreReceive} />
+    <ErrorBoundary fallbackText="Something went wrong while rendering 'Send Opposite Received'">
+      <h2>Send Opposite Received</h2>
+      <p>*Uitleg</p>
+      <EventPlotTime
+        a={objectLengthFallback(events.PostPublish, events.PostSend)}
+        b={events.PreReceive}
+      />
+    </ErrorBoundary>
   </div>
 );
 
