@@ -1,7 +1,17 @@
+import idx from "idx";
 import React from "react";
-import SendOppositeReceived from "../charts/SendOppositeReceived";
-import SendReceiveTimeDifference from "../charts/SendReceiveTimeDifference";
+import { TestCaseTypeName } from "../../constants/enum/TestCaseType";
+import { TransportTypeName } from "../../constants/enum/TransportType";
 import "./ResultsView.scss";
+
+// Charts
+import SendReceiveTimeDifference from "../charts/SendReceiveTimeDifference";
+
+//
+const optionTypeMap = {
+  testCaseType: TestCaseTypeName,
+  transportType: TransportTypeName
+};
 
 const Configuration = props => (
   <table>
@@ -9,7 +19,9 @@ const Configuration = props => (
       {Object.keys(props).map(option => (
         <tr key={option}>
           <td>{option}</td>
-          <td>{props[option]}</td>
+          <td>
+            {idx(optionTypeMap, _ => _[option][props[option]]) || props[option]}
+          </td>
         </tr>
       ))}
     </tbody>
