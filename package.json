@@ -9,6 +9,7 @@
     "idx": "^2.5.2",
     "lint-staged": "^8.1.0",
     "node-sass": "^4.10.0",
+    "querystring": "^0.2.0",
     "react": "^16.6.3",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.6.3",
@@ -40,5 +41,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "devDependencies": {
+    "prop-type": "0.0.1"
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import idx from "idx";
+import { stringify as stringifyQueryString } from "querystring";
 import getBenchmark from "../../actions/getBenchmark";
 import BenchmarkForm from "../BenchmarkForm";
 import FilesView from "../FilesView";
@@ -20,6 +21,12 @@ class App extends Component {
   events = [];
 
   showBenchmark = async fileName => {
+    window.history.pushState(
+      null,
+      fileName,
+      `/?${stringifyQueryString({ fileName })}`
+    );
+
     const { configuration, events } = await getBenchmark(fileName);
 
     this.events = events;

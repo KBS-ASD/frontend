@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { parse as parseQueryString } from "querystring";
 import getFiles from "../../actions/getFiles";
 import "./FilesView.scss";
 
@@ -17,13 +18,20 @@ class FilesView extends Component {
 
   async refresh() {
     const { showBenchmark } = this.props;
+
+    let initialFilename = null;
+
+    if (!this.state.fileNames.length)
+      initialFilename = parseQueryString(window.location.search.slice(1))
+        .fileName;
+
     const fileNames = await getFiles();
 
     if (!fileNames) return;
 
     this.setState({ fileNames, pagination: 5 });
 
-    showBenchmark(fileNames[0]);
+    showBenchmark(initialFilename || fileNames[0]);
   }
 
   showMore = () =>
