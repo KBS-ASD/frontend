@@ -1,24 +1,29 @@
 .FilesView {
-
 }
 
 .FilesView__refresh {
-    background: lavenderblush;
-    margin-bottom: 40px;
+  background: lavenderblush;
+  margin-bottom: 40px;
 }
 
 .FilesView__list {
-padding: 0;
-margin: 0;
-list-style: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .FilesView__listItem {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
 }
 
 .FilesView__listItem--active button {
-    background: lightgreen;
+  background: lightgreen;
 }
 
+.FilesView__listItem__removeButton {
+    background-color: palevioletred;
+    width: 40px;
+    margin-left: 5px;
+}

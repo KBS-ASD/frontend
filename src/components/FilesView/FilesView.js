@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { parse as parseQueryString } from "querystring";
+import removeBenchmark from "../../actions/removeBenchmark";
 import getFiles from "../../actions/getFiles";
 import "./FilesView.scss";
 
@@ -34,6 +35,12 @@ class FilesView extends Component {
     showBenchmark(initialFilename || fileNames[0]);
   }
 
+  removeFile = async fileName => {
+    if (!window.confirm(`Do you really want to remove ${fileName}`)) return;
+
+    await removeBenchmark(fileName);
+  };
+
   showMore = () =>
     this.setState(() => ({ pagination: this.state.pagination + 5 }));
 
@@ -61,6 +68,12 @@ class FilesView extends Component {
             >
               <button title={fileName} onClick={() => showBenchmark(fileName)}>
                 {fileName}
+              </button>
+              <button
+                className="FilesView__listItem__removeButton"
+                onClick={() => this.removeFile(fileName)}
+              >
+                x
               </button>
             </li>
           ))}
