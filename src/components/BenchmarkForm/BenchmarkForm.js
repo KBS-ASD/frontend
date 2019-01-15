@@ -111,19 +111,24 @@ class BenchmarkForm extends Component {
         <h2>Run benchmark</h2>
 
         <InputGroup label="MessageCount" name="messageCount">
-          <Input type="number" name="messageCount" />
+          <Input type="number" name="messageCount" min="0" step="100" />
         </InputGroup>
 
         <InputGroup label="FillerSize" name="fillerSize">
-          <Input type="number" name="fillerSize" />
+          <Input type="number" name="fillerSize" min="0" />
         </InputGroup>
 
         <InputGroup label="ClientCount" name="clientCount">
-          <Input type="number" name="clientCount" />
+          <Input type="number" name="clientCount" min="0" />
         </InputGroup>
 
         <InputGroup label="Timeout" name="timeout">
-          <Input type="text" name="timeout" data-validation={TIMESPAN_REGEX} />
+          <Input
+            type="time"
+            name="timeout"
+            step="1"
+            data-validation={TIMESPAN_REGEX}
+          />
         </InputGroup>
 
         <InputGroup label="TestCaseType" name="testCaseType">
@@ -152,9 +157,10 @@ class BenchmarkForm extends Component {
           name="azureServiceBusOperationTimeout"
         >
           <Input
-            type="text"
+            type="time"
             name="azureServiceBusOperationTimeout"
             data-validation={TIMESPAN_REGEX}
+            step="1"
           />
         </InputGroup>
 
