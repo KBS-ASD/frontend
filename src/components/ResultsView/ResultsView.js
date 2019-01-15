@@ -1,5 +1,6 @@
 import React from "react";
 import SendOppositeReceived from "../charts/SendOppositeReceived";
+import SendReceiveTimeDifference from "../charts/SendReceiveTimeDifference";
 import "./ResultsView.scss";
 
 const Configuration = props => (
@@ -20,8 +21,11 @@ const ResultsView = ({ configuration, events }) => (
     <h2>Configuration</h2>
     <Configuration {...configuration} />
 
+    {/*<h2>Send/receive time difference</h2>*/}
+    {/*<SendOppositeReceived events={events} />*/}
+
     <h2>Send/receive time difference</h2>
-    <SendOppositeReceived events={events} />
+    <SendReceiveTimeDifference events={events} />
   </div>
 );
 
