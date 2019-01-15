@@ -5,8 +5,8 @@ import { TransportTypeName } from "../../constants/enum/TransportType";
 import "./ResultsView.scss";
 
 // Charts
-import SendReceiveTime from "../charts/SendReceiveTime";
-import SendOppositeReceived from "../charts/SendOppositeReceived";
+import EventCompareTime from "../charts/EventCompareTime";
+import EventPlotTime from "../charts/EventPlotTime";
 
 //
 const optionTypeMap = {
@@ -34,13 +34,17 @@ const ResultsView = ({ configuration, events }) => (
     <h2>Configuration</h2>
     <Configuration {...configuration} />
 
-    <h2>Send/receive Time</h2>
+    <h2>PostPublish/PreReceive Time</h2>
     <p>*Uitleg</p>
-    <SendReceiveTime events={events} />
+    <EventCompareTime a={events.PostPublish} b={events.PreReceive} />
+
+    <h2>PrePublish/PostReceive Time</h2>
+    <p>*Uitleg</p>
+    <EventCompareTime a={events.PrePublish} b={events.PostReceive} />
 
     <h2>Send Opposite Received</h2>
     <p>*Uitleg</p>
-    <SendOppositeReceived events={events} />
+    <EventPlotTime a={events.PostPublish} b={events.PreReceive} />
   </div>
 );
 

@@ -1,54 +1,36 @@
 import React, { Component } from "react";
 import { Scatter as ScatterChart } from "react-chartjs-2";
 
-class SendReceiveTime extends Component {
+class EventCompareTime extends Component {
   render() {
-    const { events } = this.props;
+    const { a = {}, b = {} } = this.props;
 
     let minValue = Number.MAX_SAFE_INTEGER;
     let maxValue = Number.MIN_SAFE_INTEGER;
 
-    const [sendEvents, receiveEvents] = (events || []).reduce(
-      (accumulator, currentValue) => {
-        const [sendEvents, receiveEvents] = accumulator;
+    const { a: processedA, b: processedB } = Object.keys(a).reduce(
+      (accumulator, guid) => {
+        const aEvent = a[guid];
+        const bEvent = b[guid];
 
-        //
-        const messageId = parseInt(currentValue.properties.MessageId, 10);
+        const messageId = a[guid].Message.Id;
 
-        switch (currentValue.eventName) {
-          case "MessageSent":
-            const sendTime =
-              parseInt(currentValue.properties.SendAt, 10) / 1000000;
+        accumulator.a[messageId] = {
+          x: messageId,
+          y: aEvent.CreatedAt
+        };
 
-            sendEvents[messageId] = {
-              x: messageId,
-              y: sendTime
-            };
+        accumulator.b[messageId] = {
+          x: messageId,
+          y: bEvent.CreatedAt
+        };
 
-            minValue = Math.min(minValue, sendTime);
-            maxValue = Math.max(maxValue, sendTime);
-            break;
-
-          case "MessageReceived":
-            const receiveTime =
-              parseInt(currentValue.properties.ReceivedAt, 10) / 1000000;
-
-            receiveEvents[messageId] = {
-              x: messageId,
-              y: receiveTime
-            };
-
-            minValue = Math.min(minValue, receiveTime);
-            maxValue = Math.max(maxValue, receiveTime);
-            break;
-
-          default:
-            console.warn("Invalid event while processing data");
-        }
+        minValue = Math.min(minValue, aEvent.CreatedAt, bEvent.CreatedAt);
+        maxValue = Math.max(maxValue, aEvent.CreatedAt, bEvent.CreatedAt);
 
         return accumulator;
       },
-      [[], []]
+      { a: [], b: [] }
     );
 
     return (
@@ -58,12 +40,12 @@ class SendReceiveTime extends Component {
             datasets: [
               {
                 label: "Send",
-                data: sendEvents,
+                data: processedA,
                 pointBackgroundColor: "red"
               },
               {
                 label: "Receive",
-                data: receiveEvents,
+                data: processedB,
                 pointBackgroundColor: "blue"
               }
             ]
@@ -85,7 +67,7 @@ class SendReceiveTime extends Component {
                   },
                   ticks: {
                     min: 0,
-                    max: sendEvents.length
+                    max: a.length
                   }
                 }
               ],
@@ -109,4 +91,4 @@ class SendReceiveTime extends Component {
   }
 }
 
-export default SendReceiveTime;
+export default EventCompareTime;

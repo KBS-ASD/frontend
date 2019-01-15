@@ -1,38 +1,30 @@
 import React, { Component } from "react";
 import { Scatter as ScatterChart } from "react-chartjs-2";
 
-class SendOppositeReceived extends Component {
+class EventPlotTime extends Component {
   render() {
-    const { events } = this.props;
+    const { a = {}, b = {} } = this.props;
 
     let minX = Number.MAX_SAFE_INTEGER;
-    let maxX = Number.MIN_SAFE_INTEGER;
     let minY = Number.MAX_SAFE_INTEGER;
+    let maxX = Number.MIN_SAFE_INTEGER;
     let maxY = Number.MIN_SAFE_INTEGER;
 
-    const data = (events || []).reduce((accumulator, currentValue) => {
-      if (accumulator[currentValue.properties.MessageId] == null)
-        accumulator[currentValue.properties.MessageId] = { x: 0, y: 0 };
+    const data = Object.keys(a).reduce((accumulator, guid) => {
+      const messageId = a[guid].Message.Id;
 
-      switch (currentValue.eventName) {
-        case "MessageReceived":
-          const received =
-            parseInt(currentValue.properties.ReceivedAt) / 1000000;
-          accumulator[currentValue.properties.MessageId].y = received;
-          minY = Math.min(minY, received);
-          maxY = Math.max(maxY, received);
-          break;
+      const aCreatedAt = a[guid].CreatedAt / 10000;
+      const bCreatedAt = b[guid].CreatedAt / 10000;
 
-        case "MessageSent":
-          const send = parseInt(currentValue.properties.SendAt) / 1000000;
-          accumulator[currentValue.properties.MessageId].x = send;
-          minX = Math.min(minX, send);
-          maxX = Math.max(maxX, send);
-          break;
+      accumulator[messageId] = {
+        x: aCreatedAt,
+        y: bCreatedAt
+      };
 
-        default:
-          accumulator[currentValue.properties.MessageId].y = -1;
-      }
+      minX = Math.min(minX, aCreatedAt);
+      maxX = Math.max(maxX, aCreatedAt);
+      minY = Math.min(minY, bCreatedAt);
+      maxY = Math.max(maxY, bCreatedAt);
 
       return accumulator;
     }, []);
@@ -46,13 +38,13 @@ class SendOppositeReceived extends Component {
                 label: "Message",
                 data: data,
                 pointBackgroundColor: "green"
+              },
+              {
+                label: "Time line",
+                data: [{ x: minX, y: minX }, { x: maxY, y: maxY }],
+                pointBackgroundColor: "blue",
+                showLine: true
               }
-              // {
-              //   label: "Time line",
-              //   data: [{x: minX, y: minX}, {x: maxY, y: maxY}],
-              //   pointBackgroundColor: "blue",
-              //   showLine: true
-              // }
             ]
           }}
           options={{
@@ -96,4 +88,4 @@ class SendOppositeReceived extends Component {
   }
 }
 
-export default SendOppositeReceived;
+export default EventPlotTime;
