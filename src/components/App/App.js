@@ -31,11 +31,11 @@ class App extends Component {
 
     this.events = events;
 
-    this.setState({ configuration: configuration });
+    this.setState({ configuration: configuration, activeBenchmark: fileName });
   };
 
   render() {
-    const { configuration } = this.state;
+    const { configuration, activeBenchmark } = this.state;
 
     return (
       <div className="App">
@@ -46,7 +46,7 @@ class App extends Component {
 
               <FilesView
                 showBenchmark={this.showBenchmark}
-                activeBenchmark={idx(configuration, _ => _.name)}
+                activeBenchmark={activeBenchmark}
               />
 
               <BenchmarkForm />
