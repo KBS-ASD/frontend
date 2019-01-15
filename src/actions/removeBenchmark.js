@@ -5,5 +5,7 @@ export default async fileName => {
     method: "DELETE"
   });
 
+  if (response.status !== 204) return {};
+
   return await response.json();
 };

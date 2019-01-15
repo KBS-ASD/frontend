@@ -39,6 +39,7 @@ class FilesView extends Component {
     if (!window.confirm(`Do you really want to remove ${fileName}`)) return;
 
     await removeBenchmark(fileName);
+    await this.refresh();
   };
 
   showMore = () =>
