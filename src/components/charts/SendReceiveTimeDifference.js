@@ -5,6 +5,9 @@ class SendReceiveTimeDifference extends Component {
   render() {
     const { events } = this.props;
 
+    let minValue = Number.MAX_SAFE_INTEGER;
+    let maxValue = Number.MIN_SAFE_INTEGER;
+
     const [sendEvents, receiveEvents] = (events || []).reduce(
       (accumulator, currentValue) => {
         const [sendEvents, receiveEvents] = accumulator;
@@ -14,17 +17,29 @@ class SendReceiveTimeDifference extends Component {
 
         switch (currentValue.eventName) {
           case "MessageSent":
+            const sendTime =
+              parseInt(currentValue.properties.SendAt, 10) / 1000;
+
             sendEvents[messageId] = {
               x: messageId,
-              y: parseInt(currentValue.properties.SendAt, 10) / 1000
+              y: sendTime
             };
+
+            minValue = Math.min(minValue, sendTime);
+            maxValue = Math.max(maxValue, sendTime);
             break;
 
           case "MessageReceived":
+            const receiveTime =
+              parseInt(currentValue.properties.ReceivedAt, 10) / 1000;
+
             receiveEvents[messageId] = {
               x: messageId,
-              y: parseInt(currentValue.properties.ReceivedAt, 10) / 1000
+              y: receiveTime
             };
+
+            minValue = Math.min(minValue, receiveTime);
+            maxValue = Math.max(maxValue, receiveTime);
             break;
 
           default:
@@ -36,9 +51,6 @@ class SendReceiveTimeDifference extends Component {
       [[], []]
     );
 
-    const minValue = Math.min(...sendEvents, ...receiveEvents);
-    const maxValue = Math.max(...sendEvents, ...receiveEvents);
-
     return (
       <div>
         <ScatterChart
@@ -46,18 +58,13 @@ class SendReceiveTimeDifference extends Component {
             datasets: [
               {
                 label: "Send",
-                data: [{ x: 0, y: 0 }, { x: events.length, y: maxValue }],
-                showLine: true
-              },
-              {
-                label: "Send",
                 data: sendEvents,
-                showLine: true
+                pointBackgroundColor: "red"
               },
               {
                 label: "Receive",
                 data: receiveEvents,
-                showLine: true
+                pointBackgroundColor: "blue"
               }
             ]
           }}
@@ -71,7 +78,7 @@ class SendReceiveTimeDifference extends Component {
                   },
                   ticks: {
                     min: 0,
-                    max: events.length
+                    max: sendEvents.length
                   }
                 }
               ],
