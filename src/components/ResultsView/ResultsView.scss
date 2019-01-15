@@ -11,3 +11,17 @@
     }
   }
 }
+
+.ResultsView__top {
+  display: flex;
+}
+
+.ResultsView__top__benchmarkConfiguration {
+  width: 25%;
+}
+
+.ResultsView__top__eventTypeOverview {
+  height: 400px;
+  max-width: 600px;
+  flex: 1 0 auto;
+}

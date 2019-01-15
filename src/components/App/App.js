@@ -18,7 +18,7 @@ class App extends Component {
     };
   }
 
-  events = [];
+  events = {};
 
   showBenchmark = async fileName => {
     window.history.pushState(

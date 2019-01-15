@@ -5,6 +5,7 @@ import { TransportTypeName } from "../../constants/enum/TransportType";
 import "./ResultsView.scss";
 
 // Charts
+import EventTypeDoughnut from "../charts/EventTypeDoughnut";
 import EventCompareTime from "../charts/EventCompareTime";
 import EventPlotTime from "../charts/EventPlotTime";
 
@@ -31,8 +32,24 @@ const Configuration = props => (
 
 const ResultsView = ({ configuration, events }) => (
   <div className="ResultsView">
-    <h2>Configuration</h2>
-    <Configuration {...configuration} />
+    <div className="ResultsView__top">
+      <div className="ResultsView__top__benchmarkConfiguration">
+        <h2>Configuration</h2>
+
+        <Configuration {...configuration} />
+      </div>
+
+      <div className="ResultsView__top__eventTypeOverview">
+        <h2>Event type distribution</h2>
+
+        <EventTypeDoughnut
+          segments={Object.keys(events).map(label => ({
+            label,
+            value: Object.keys(events[label]).length
+          }))}
+        />
+      </div>
+    </div>
 
     <h2>PostPublish/PreReceive Time</h2>
     <p>*Uitleg</p>
