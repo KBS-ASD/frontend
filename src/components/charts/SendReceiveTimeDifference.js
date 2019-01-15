@@ -69,6 +69,13 @@ class SendReceiveTimeDifference extends Component {
             ]
           }}
           options={{
+            animation: {
+              duration: 0
+            },
+            hover: {
+              animationDuration: 0
+            },
+            responsiveAnimationDuration: 0,
             scales: {
               xAxes: [
                 {
