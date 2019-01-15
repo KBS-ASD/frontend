@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Scatter as ScatterChart } from "react-chartjs-2";
 
-class SendReceiveTimeDifference extends Component {
+class SendReceiveTime extends Component {
   render() {
     const { events } = this.props;
 
@@ -109,4 +109,4 @@ class SendReceiveTimeDifference extends Component {
   }
 }
 
-export default SendReceiveTimeDifference;
+export default SendReceiveTime;

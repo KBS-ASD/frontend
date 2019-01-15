@@ -1,40 +1,14 @@
 import React, { Component } from "react";
 import { Scatter as ScatterChart } from "react-chartjs-2";
 
-const options = {
-  scales: {
-    xAxes: [
-      {
-        scaleLabel: {
-          display: true,
-          labelString: "SentAt (ms)"
-        },
-        ticks: {
-          // beginAtZero: true,
-          min: 60000,
-          max: 80000
-        }
-      }
-    ],
-    yAxes: [
-      {
-        scaleLabel: {
-          display: true,
-          labelString: "ReceivedAt (ms)"
-        },
-        ticks: {
-          // beginAtZero: true,
-          min: 60000,
-          max: 80000
-        }
-      }
-    ]
-  }
-};
-
 class SendOppositeReceived extends Component {
   render() {
     const { events } = this.props;
+
+    let minX = Number.MAX_SAFE_INTEGER;
+    let maxX = Number.MIN_SAFE_INTEGER;
+    let minY = Number.MAX_SAFE_INTEGER;
+    let maxY = Number.MIN_SAFE_INTEGER;
 
     const data = (events || []).reduce((accumulator, currentValue) => {
       if (accumulator[currentValue.properties.MessageId] == null)
@@ -42,13 +16,18 @@ class SendOppositeReceived extends Component {
 
       switch (currentValue.eventName) {
         case "MessageReceived":
-          accumulator[currentValue.properties.MessageId].y =
-            parseInt(currentValue.properties.ReceivedAt) / 1000;
+          const received =
+            parseInt(currentValue.properties.ReceivedAt) / 1000000;
+          accumulator[currentValue.properties.MessageId].y = received;
+          minY = Math.min(minY, received);
+          maxY = Math.max(maxY, received);
           break;
 
         case "MessageSent":
-          accumulator[currentValue.properties.MessageId].x =
-            parseInt(currentValue.properties.SentAt) / 1000;
+          const send = parseInt(currentValue.properties.SendAt) / 1000000;
+          accumulator[currentValue.properties.MessageId].x = send;
+          minX = Math.min(minX, send);
+          maxX = Math.max(maxX, send);
           break;
 
         default:
@@ -64,18 +43,53 @@ class SendOppositeReceived extends Component {
           data={{
             datasets: [
               {
-                label: "Test data",
-                data
-              },
-              {
-                data: [{ x: 0, y: 0 }, { x: 100000, y: 100000 }],
-                showLine: true
+                label: "Message",
+                data: data,
+                pointBackgroundColor: "green"
               }
+              // {
+              //   label: "Time line",
+              //   data: [{x: minX, y: minX}, {x: maxY, y: maxY}],
+              //   pointBackgroundColor: "blue",
+              //   showLine: true
+              // }
             ]
           }}
-          options={options}
-          width={1280}
-          height={720}
+          options={{
+            animation: {
+              duration: 0
+            },
+            hover: {
+              animationDuration: 0
+            },
+            responsiveAnimationDuration: 0,
+            scales: {
+              xAxes: [
+                {
+                  scaleLabel: {
+                    display: true,
+                    labelString: "Time send (ms)"
+                  },
+                  ticks: {
+                    min: minX,
+                    max: maxX
+                  }
+                }
+              ],
+              yAxes: [
+                {
+                  scaleLabel: {
+                    display: true,
+                    labelString: "Time received (ms)"
+                  },
+                  ticks: {
+                    min: minY,
+                    max: maxY
+                  }
+                }
+              ]
+            }
+          }}
         />
       </div>
     );

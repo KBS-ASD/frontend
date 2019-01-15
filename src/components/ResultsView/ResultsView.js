@@ -5,7 +5,8 @@ import { TransportTypeName } from "../../constants/enum/TransportType";
 import "./ResultsView.scss";
 
 // Charts
-import SendReceiveTimeDifference from "../charts/SendReceiveTimeDifference";
+import SendReceiveTime from "../charts/SendReceiveTime";
+import SendOppositeReceived from "../charts/SendOppositeReceived";
 
 //
 const optionTypeMap = {
@@ -33,11 +34,13 @@ const ResultsView = ({ configuration, events }) => (
     <h2>Configuration</h2>
     <Configuration {...configuration} />
 
-    {/*<h2>Send/receive time difference</h2>*/}
-    {/*<SendOppositeReceived events={events} />*/}
+    <h2>Send/receive Time</h2>
+    <p>*Uitleg</p>
+    <SendReceiveTime events={events} />
 
-    <h2>Send/receive time difference</h2>
-    <SendReceiveTimeDifference events={events} />
+    <h2>Send Opposite Received</h2>
+    <p>*Uitleg</p>
+    <SendOppositeReceived events={events} />
   </div>
 );
 
