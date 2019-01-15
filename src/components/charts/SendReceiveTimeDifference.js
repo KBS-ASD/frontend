@@ -18,7 +18,7 @@ class SendReceiveTimeDifference extends Component {
         switch (currentValue.eventName) {
           case "MessageSent":
             const sendTime =
-              parseInt(currentValue.properties.SendAt, 10) / 1000;
+              parseInt(currentValue.properties.SendAt, 10) / 1000000;
 
             sendEvents[messageId] = {
               x: messageId,
@@ -31,7 +31,7 @@ class SendReceiveTimeDifference extends Component {
 
           case "MessageReceived":
             const receiveTime =
-              parseInt(currentValue.properties.ReceivedAt, 10) / 1000;
+              parseInt(currentValue.properties.ReceivedAt, 10) / 1000000;
 
             receiveEvents[messageId] = {
               x: messageId,
