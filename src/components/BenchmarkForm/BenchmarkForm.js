@@ -21,7 +21,7 @@ import "./BenchmarkForm.scss";
 const TIMESPAN_REGEX = /\d{2}:\d{2}:\d{2}/;
 
 const InputGroup = ({ children, inline, label, name }) => (
-  <div className={`InputGroup ${inline && "-inline"}`}>
+  <div className={`InputGroup ${inline ? "-inline" : ""}`}>
     <label htmlFor={name}>{label}</label>
     {children}
   </div>

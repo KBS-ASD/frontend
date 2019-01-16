@@ -63,8 +63,11 @@ class FilesView extends Component {
           {paginatedFilenames.map((fileName, index) => (
             <li
               key={index}
-              className={`FilesView__listItem ${activeBenchmark === fileName &&
-                "FilesView__listItem--active"}`}
+              className={`FilesView__listItem ${
+                activeBenchmark === fileName
+                  ? "FilesView__listItem--active"
+                  : ""
+              }`}
             >
               <button title={fileName} onClick={() => showBenchmark(fileName)}>
                 {fileName}

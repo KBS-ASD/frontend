@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import idx from "idx";
 import { stringify as stringifyQueryString } from "querystring";
 import getBenchmark from "../../actions/getBenchmark";
 import BenchmarkForm from "../BenchmarkForm";

@@ -1,4 +1,6 @@
 .FilesView {
+  display: flex;
+  flex-direction: column;
 }
 
 .FilesView__refresh {
@@ -16,14 +18,23 @@
   width: 100%;
   margin-bottom: 10px;
   display: flex;
+
+  button:first-child {
+    width: 100%;
+  }
 }
 
-.FilesView__listItem--active button {
+.FilesView__listItem--active button:first-child {
   background: lightgreen;
 }
 
 .FilesView__listItem__removeButton {
-    background-color: palevioletred;
-    width: 40px;
-    margin-left: 5px;
+  background-color: orangered;
+  width: 40px;
+  margin-left: 5px;
+  color: white;
+
+  &:hover {
+    background-color: mediumvioletred;
+  }
 }

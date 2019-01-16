@@ -1,5 +1,6 @@
 import idx from "idx";
 import React from "react";
+import SourceSelector from "../../components/SourceSelector";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { TestCaseTypeName } from "../../constants/enum/TestCaseType";
 import { TransportTypeName } from "../../constants/enum/TransportType";
@@ -65,38 +66,15 @@ const ResultsView = ({ configuration, events = {} }) => (
     <ErrorBoundary fallbackText="Something went wrong while rendering 'PostPublish/PreReceive Time'">
       <h2>PostPublish/PreReceive Time</h2>
       <p>*Uitleg</p>
-      <EventCompareTime
-        a={objectLengthFallback(events.PostPublish, events.PostSend)}
-        b={events.PreReceive}
-      />
-    </ErrorBoundary>
 
-    <ErrorBoundary fallbackText="Something went wrong while rendering 'PrePublish/PostReceive Time'">
-      <h2>PrePublish/PostReceive Time</h2>
-      <p>*Uitleg</p>
-      <EventCompareTime
-        a={objectLengthFallback(events.PrePublish, events.PreSend)}
-        b={events.PostReceive}
-      />
+      <SourceSelector component={<EventCompareTime />} data={events} />
     </ErrorBoundary>
 
     <ErrorBoundary fallbackText="Something went wrong while rendering 'Send Opposite Received'">
       <h2>Send Opposite Received</h2>
       <p>*Uitleg</p>
-      <form>
-        <select id="oppositeGraphHorizontal" onChange={console.log(1)}>
-          <option selected={true}>PrePublish</option>
-          <option>PostPublish</option>
-        </select>
-        <select id="oppositeGraphVertical">
-          <option selected={true}>PreSend</option>
-          <option>PostSend</option>
-        </select>
-      </form>
-      <EventPlotTime
-        a={objectLengthFallback(events.PostPublish, events.PostSend)}
-        b={events.PreReceive}
-      />
+
+      <SourceSelector component={<EventPlotTime />} data={events} />
     </ErrorBoundary>
   </div>
 );
