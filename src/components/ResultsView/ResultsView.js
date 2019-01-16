@@ -43,31 +43,32 @@ const ResultsView = ({ configuration, events = {} }) => (
           <Configuration {...configuration} />
         </div>
       </ErrorBoundary>
-
-      <ErrorBoundary fallbackText="Something went wrong while rendering 'Event type distribution'">
-        <h2>Event type distribution</h2>
-
-        <div className="ResultsView__top__eventTypeOverview">
-          <EventTypeDoughnut
-            segments={Object.keys(events).map(label => ({
-              label,
-              value: Object.keys(events[label]).length
-            }))}
-          />
-        </div>
-      </ErrorBoundary>
     </div>
 
-    <ErrorBoundary fallbackText="Something went wrong while rendering 'PostPublish/PreReceive Time'">
-      <h2>PostPublish/PreReceive Time</h2>
+    <h2>Event types</h2>
+    <EventTypeInfo />
 
-      <EventTypeInfo />
+    <ErrorBoundary fallbackText="Something went wrong while rendering 'Event type distribution'">
+      <h2>Event type distribution</h2>
+
+      <div className="ResultsView__top__eventTypeOverview">
+        <EventTypeDoughnut
+          segments={Object.keys(events).map(label => ({
+            label,
+            value: Object.keys(events[label]).length
+          }))}
+        />
+      </div>
+    </ErrorBoundary>
+
+    <ErrorBoundary fallbackText="Something went wrong while rendering 'PostPublish/PreReceive Time'">
+      <h2>Message event elapsed time</h2>
 
       <SourceSelector component={<EventCompareTime />} data={events} />
     </ErrorBoundary>
 
     <ErrorBoundary fallbackText="Something went wrong while rendering 'Send Opposite Received'">
-      <h2>Send Opposite Received</h2>
+      <h2>Message event compare time</h2>
 
       <SourceSelector component={<EventPlotTime />} data={events} />
     </ErrorBoundary>

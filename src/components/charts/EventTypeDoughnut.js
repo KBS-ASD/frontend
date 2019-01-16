@@ -14,7 +14,7 @@ const hslGenerator = function*() {
     };
 
     // Change hue
-    hue = hue + (30 % 360);
+    hue = (hue + 30) % 360;
   }
 };
 
