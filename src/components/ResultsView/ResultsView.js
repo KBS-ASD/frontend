@@ -37,7 +37,7 @@ const Configuration = props => (
   </table>
 );
 
-const ResultsView = ({ configuration, events }) => (
+const ResultsView = ({ configuration, events = {} }) => (
   <div className="ResultsView">
     <div className="ResultsView__top">
       <ErrorBoundary fallbackText="Something went wrong while rendering 'Configuration'">

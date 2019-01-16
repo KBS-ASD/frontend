@@ -41,10 +41,11 @@ class EventPlotTime extends Component {
                 pointBackgroundColor: "green"
               },
               {
-                label: "Time line",
+                label: "Send at",
                 data: [{ x: minX, y: minX }, { x: maxY, y: maxY }],
                 pointBackgroundColor: "blue",
-                showLine: true
+                showLine: true,
+                lineTension: 0
               }
             ]
           }}

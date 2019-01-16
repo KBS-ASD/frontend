@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import idx from "idx";
 import { Scatter as ScatterChart } from "react-chartjs-2";
 
-const EMPTY_OBJECT = {};
-
 class EventCompareTime extends Component {
   render() {
     const { a = {}, b = {} } = this.props;
@@ -13,23 +11,23 @@ class EventCompareTime extends Component {
 
     const { a: processedA, b: processedB } = Object.keys(a).reduce(
       (accumulator, guid) => {
-        const aEvent = a[guid] || EMPTY_OBJECT;
-        const bEvent = b[guid] || EMPTY_OBJECT;
-
         const messageId = idx(a[guid], _ => _.Message.Id);
+
+        const aCreatedAt = idx(a[guid], _ => _.CreatedAt) / 10000;
+        const bCreatedAt = idx(b[guid], _ => _.CreatedAt) / 10000;
 
         accumulator.a[messageId] = {
           x: messageId,
-          y: aEvent.CreatedAt
+          y: aCreatedAt
         };
 
         accumulator.b[messageId] = {
           x: messageId,
-          y: bEvent.CreatedAt
+          y: bCreatedAt
         };
 
-        minValue = Math.min(minValue, aEvent.CreatedAt, bEvent.CreatedAt);
-        maxValue = Math.max(maxValue, aEvent.CreatedAt, bEvent.CreatedAt);
+        minValue = Math.min(minValue, aCreatedAt, bCreatedAt);
+        maxValue = Math.max(maxValue, aCreatedAt, bCreatedAt);
 
         return accumulator;
       },
