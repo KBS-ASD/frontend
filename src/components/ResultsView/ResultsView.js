@@ -12,8 +12,8 @@ import EventPlotTime from "../charts/EventPlotTime";
 
 //
 const optionTypeMap = {
-  testCaseType: TestCaseTypeName,
-  transportType: TransportTypeName
+  TestCaseType: TestCaseTypeName,
+  TransportType: TransportTypeName
 };
 
 const objectLengthFallback = (a, b) => {
