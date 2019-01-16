@@ -1,5 +1,6 @@
 import idx from "idx";
 import React from "react";
+import EventTypeInfo from "../../components/EventTypeInfo";
 import SourceSelector from "../../components/SourceSelector";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { TestCaseTypeName } from "../../constants/enum/TestCaseType";
@@ -44,9 +45,9 @@ const ResultsView = ({ configuration, events = {} }) => (
       </ErrorBoundary>
 
       <ErrorBoundary fallbackText="Something went wrong while rendering 'Event type distribution'">
-        <div className="ResultsView__top__eventTypeOverview">
-          <h2>Event type distribution</h2>
+        <h2>Event type distribution</h2>
 
+        <div className="ResultsView__top__eventTypeOverview">
           <EventTypeDoughnut
             segments={Object.keys(events).map(label => ({
               label,
@@ -59,14 +60,14 @@ const ResultsView = ({ configuration, events = {} }) => (
 
     <ErrorBoundary fallbackText="Something went wrong while rendering 'PostPublish/PreReceive Time'">
       <h2>PostPublish/PreReceive Time</h2>
-      <p>*Uitleg</p>
+
+      <EventTypeInfo />
 
       <SourceSelector component={<EventCompareTime />} data={events} />
     </ErrorBoundary>
 
     <ErrorBoundary fallbackText="Something went wrong while rendering 'Send Opposite Received'">
       <h2>Send Opposite Received</h2>
-      <p>*Uitleg</p>
 
       <SourceSelector component={<EventPlotTime />} data={events} />
     </ErrorBoundary>
