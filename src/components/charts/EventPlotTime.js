@@ -62,7 +62,7 @@ class EventPlotTime extends Component {
                 {
                   scaleLabel: {
                     display: true,
-                    labelString: "Time send (ms)"
+                    labelString: "Time (ms)"
                   },
                   ticks: {
                     min: minX,
@@ -74,7 +74,7 @@ class EventPlotTime extends Component {
                 {
                   scaleLabel: {
                     display: true,
-                    labelString: "Time received (ms)"
+                    labelString: "Time (ms)"
                   },
                   ticks: {
                     min: minY,
