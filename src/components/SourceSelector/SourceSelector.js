@@ -17,7 +17,9 @@ class SourceSelector extends Component {
 
     const { data } = props;
 
-    const [aType, bType] = Object.keys(data);
+    const [aType, bType] = Object.keys(data).filter(
+      type => Object.keys(data[type]).length
+    );
 
     return {
       aType,
@@ -48,22 +50,26 @@ class SourceSelector extends Component {
         >
           <span>Compare&nbsp;</span>
 
-          <select name="first" onChange={this.handleSubmit}>
-            {eventTypes.map(eventType => (
-              <option value={eventType} key={eventType}>
-                {eventType}
-              </option>
-            ))}
+          <select name="first" value={aType} onChange={this.handleSubmit}>
+            {eventTypes
+              .filter(eventType => eventType !== bType)
+              .map(eventType => (
+                <option value={eventType} key={eventType}>
+                  {eventType}
+                </option>
+              ))}
           </select>
 
           <span>&nbsp;with&nbsp;</span>
 
-          <select name="second" onChange={this.handleSubmit}>
-            {eventTypes.map(eventType => (
-              <option value={eventType} key={eventType}>
-                {eventType}
-              </option>
-            ))}
+          <select name="second" value={bType} onChange={this.handleSubmit}>
+            {eventTypes
+              .filter(eventType => eventType !== aType)
+              .map(eventType => (
+                <option value={eventType} key={eventType}>
+                  {eventType}
+                </option>
+              ))}
           </select>
         </form>
 
