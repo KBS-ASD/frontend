@@ -17,12 +17,6 @@ const optionTypeMap = {
   TransportType: TransportTypeName
 };
 
-const objectLengthFallback = (a, b) => {
-  if (a == null || Object.keys(a).length < 1) return b;
-
-  return a;
-};
-
 const Configuration = props => (
   <table>
     <tbody>
