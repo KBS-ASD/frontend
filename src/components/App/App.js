@@ -17,24 +17,31 @@ class App extends Component {
     };
   }
 
-  events = {};
+  datasets = {};
 
   showBenchmark = async fileName => {
+    this.setState({ activeBenchmark: fileName });
+
     window.history.pushState(
       null,
       fileName,
       `/?${stringifyQueryString({ fileName })}`
     );
 
-    const { configuration, events } = await getBenchmark(fileName);
+    // No need to download a new dataset if it already exists
+    if (this.datasets[fileName]) return;
 
-    this.events = events;
+    this.setState({ isLoading: true });
 
-    this.setState({ configuration: configuration, activeBenchmark: fileName });
+    this.datasets[fileName] = await getBenchmark(fileName);
+
+    this.setState({ isLoading: false });
   };
 
   render() {
-    const { configuration, activeBenchmark } = this.state;
+    const { activeBenchmark } = this.state;
+
+    const { configuration, events } = this.datasets[activeBenchmark] || {};
 
     return (
       <div className="App">
@@ -52,7 +59,11 @@ class App extends Component {
             </Fragment>
           }
           content={
-            <ResultsView configuration={configuration} events={this.events} />
+            !activeBenchmark ? (
+              <p>Loading data...</p>
+            ) : (
+              <ResultsView configuration={configuration} events={events} />
+            )
           }
         />
       </div>
