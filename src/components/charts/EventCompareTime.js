@@ -13,8 +13,8 @@ class EventCompareTime extends Component {
       (accumulator, guid) => {
         const messageId = idx(a[guid], _ => _.Message.Id);
 
-        const aCreatedAt = idx(a[guid], _ => _.CreatedAt) / 10000;
-        const bCreatedAt = idx(b[guid], _ => _.CreatedAt) / 10000;
+        const aCreatedAt = idx(a[guid], _ => _.CreatedAt) || 0 / 10000;
+        const bCreatedAt = idx(b[guid], _ => _.CreatedAt) || 0 / 10000;
 
         accumulator.a[messageId] = {
           x: messageId,
