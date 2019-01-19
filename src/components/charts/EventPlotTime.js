@@ -14,8 +14,8 @@ class EventPlotTime extends Component {
     const data = Object.keys(a).reduce((accumulator, guid) => {
       const messageId = idx(a[guid], _ => _.Message.Id);
 
-      const aCreatedAt = idx(a[guid], _ => _.CreatedAt) || 0 / 10000;
-      const bCreatedAt = idx(b[guid], _ => _.CreatedAt) || 0 / 10000;
+      const aCreatedAt = (idx(a[guid], _ => _.CreatedAt) || 0) / 10000;
+      const bCreatedAt = (idx(b[guid], _ => _.CreatedAt) || 0) / 10000;
 
       accumulator[messageId] = {
         x: aCreatedAt,
